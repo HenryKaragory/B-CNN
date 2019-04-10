@@ -16,12 +16,15 @@ from keras.layers.normalization import BatchNormalization
 from keras.utils.data_utils import get_file
 from keras import backend as K
 
-def scheduler(epoch):
-  learning_rate_init = 0.003
-  if epoch > 40:
-    learning_rate_init = 0.0005
-  if epoch > 50:
-    learning_rate_init = 0.0001
+learning_rates_initial_batches = np.logspace(np.log(0.003), np.log(0.0001), num=12, base=np.exp(1))
+learning_rates_last_batch = np.logspace(np.log(0.003), np.log(0.0001), num=24, base=np.exp(1))
+
+
+def scheduler(epoch):  
+  if epoch < 37:
+    learning_rate_init = learning_rates_initial_batches[(epoch-1)%12]
+  else:
+    learning_rate_init = learning_rates_last_batch[epoch-37]
   return learning_rate_init
 
 class LossWeightsModifier(keras.callbacks.Callback):
@@ -42,6 +45,8 @@ class LossWeightsModifier(keras.callbacks.Callback):
       K.set_value(self.alpha, 0)
       K.set_value(self.beta, 0)
       K.set_value(self.gamma, 1)
+    
+    
 
 
 #-------- dimensions ---------
