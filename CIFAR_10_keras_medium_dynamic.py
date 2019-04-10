@@ -16,8 +16,10 @@ from keras.layers.normalization import BatchNormalization
 from keras.utils.data_utils import get_file
 from keras import backend as K
 
-learning_rates_initial_batches = np.logspace(np.log(0.003), np.log(0.0001), num=12, base=np.exp(1))
-learning_rates_last_batch = np.logspace(np.log(0.003), np.log(0.0001), num=24, base=np.exp(1))
+flat_init = [0.003 for i in range(5)]
+learning_rates_initial_batches = flat_init +  list(np.logspace(np.log(0.003), np.log(0.0001), num=7, base=np.exp(1)))
+flat_last = [0.003 for i in range(11)]
+learning_rates_last_batch = flat_last + list(np.logspace(np.log(0.003), np.log(0.0001), num=13, base=np.exp(1)))
 
 
 def scheduler(epoch):  
