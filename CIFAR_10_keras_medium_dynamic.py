@@ -33,15 +33,15 @@ class LossWeightsModifier(keras.callbacks.Callback):
     self.beta = beta
     self.gamma = gamma
   def on_epoch_end(self, epoch, logs={}):
-    if epoch == 8:
+    if epoch == 12:
       K.set_value(self.alpha, 0.1)
       K.set_value(self.beta, 0.8)
       K.set_value(self.gamma, 0.1)
-    if epoch == 18:
+    if epoch == 24:
       K.set_value(self.alpha, 0.1)
       K.set_value(self.beta, 0.2)
       K.set_value(self.gamma, 0.7)
-    if epoch == 28:
+    if epoch == 36:
       K.set_value(self.alpha, 0)
       K.set_value(self.beta, 0)
       K.set_value(self.gamma, 1)
